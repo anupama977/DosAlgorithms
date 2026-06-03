@@ -1,17 +1,4 @@
-"""
-Improved Alternate Direction Algorithm (Algorithm 1 from the paper).
 
-The algorithm optimizes the event-trigger threshold sigma in [0, 1].
-Line 2 says to compute the LMIs and solve the target function, but the
-algorithm box does not define those LMIs. This file keeps line 2 as a
-replaceable oracle and implements the update equations from lines 3 to 5.
-
-Run:
-    python improved_ada_threshold.py
-
-With the bundled Codex Python in this workspace:
-    C:\\Users\\anupa\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe improved_ada_threshold.py
-"""
 
 from __future__ import annotations
 
@@ -58,14 +45,7 @@ def demo_lmi_oracle(
     feasible_threshold: float,
     rho: float,
 ) -> LMIResult:
-    """
-    Demonstration replacement for the paper's LMI solver.
 
-    In the actual paper, this step solves the LMIs from the theorem and returns
-    feasibility for the current trigger threshold. Here, sigma is feasible up
-    to `feasible_threshold`, so the expected optimum is approximately that
-    threshold.
-    """
 
     margin = feasible_threshold - sigma
     feasible = margin >= -1e-12
@@ -121,11 +101,6 @@ def improved_alternate_direction_algorithm(
     h_update_mode: str,
     lmi_oracle: Callable[[float], LMIResult],
 ) -> tuple[float, List[IterationRecord]]:
-    """
-    Run Algorithm 1 and return the best feasible threshold sigma_max.
-
-    This is the scalar threshold version shown in the paper.
-    """
 
     if not 0.0 <= sigma0 <= 1.0:
         raise ValueError("sigma0 must be inside [0, 1].")
