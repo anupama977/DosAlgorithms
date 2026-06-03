@@ -1,20 +1,4 @@
-"""
-Performance Analysis and Controller Matrix (Algorithm 2).
 
-Algorithm 2 searches for the maximum acceptable time delay tau_max and then
-computes the controller gain matrix K = Y X^{-1}.
-
-The algorithm box defines the loop structure and the output rule, but the
-actual LMI matrices are system-specific. This file implements the loop exactly
-as a runnable Python structure and keeps the LMI feasibility calculation as a
-replaceable oracle.
-
-Run:
-    python performance_controller_matrix.py
-
-With the bundled Codex Python in this workspace:
-    C:\\Users\\anupa\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe performance_controller_matrix.py
-"""
 
 from __future__ import annotations
 
@@ -60,17 +44,7 @@ def demo_lmi_oracle(
     *,
     delay_limit: float,
 ) -> LMIResult:
-    """
-    Demonstration replacement for Algorithm 2 lines 5 to 7.
-
-    The real version should build and solve:
-        [M Z; * M] > 0
-        sum(Lambda, Omega) = Xi + Pi_2.T @ Omega @ Pi_2 <= 0
-        dV_it/dt <= sum(Lambda, Omega) <= 0
-
-    This demo marks candidates as feasible until `delay_limit`.
-    """
-
+  
     feasible = tau_candidate <= delay_limit + 1e-12
 
     # Demo controller matrices. In a real LMI solver, Y and X are decision
